@@ -1,36 +1,41 @@
-package Algorithms.algorithm.others;
+package Algorithms.array;
 
 public class PlusOne {
-    public static void main(String[] args) {
-        PlusOne po = new PlusOne();
-        int[] digits = {1,2,3};
-        po.plusOne(digits);
-    }
-    
     public int[] plusOne(int[] digits) {
-        if (digits.length == 0) {
-            return digits;
+        if (digits == null) {
+            return null;
         }
         
-        int[] rst = new int[digits.length];
-        boolean next = true;
+        int overFlow = 0;
         
-        for (int i = 0; i < digits.length; i++) {
-            int tmp = digits[digits.length - i - 1];
-            if (next == true) {
-                tmp++;
-                if (tmp >= 10) {
-                    tmp = 0;
-                    next = true;
-                } else {
-                    next = false;
-                }
+        int len = digits.length;
+        int[] ret = new int[len];
+        
+        for (int i = len - 1; i >= 0; i--) {
+            int sum = digits[i] + overFlow;
+            if (i == len - 1) {
+                // 只有最后一位需要加1
+                sum++;
             }
             
-            rst[digits.length - i - 1] = tmp;
+            // 溢出的话，置溢出位。
+            if (sum > 9) {
+                overFlow = 1;
+            } else {
+                overFlow = 0;
+            }
             
+            // 把高位去掉，因为我们要0-9
+            ret[i] = sum % 10;
         }
-        return rst;
+        
+        if (overFlow == 1) {
+            int[] retOver = new int[len + 1];
+            System.arraycopy(retOver, 1, ret, 0, len);
+            retOver[0] = 1;
+            return retOver;
+        }
+        
+        return ret;
     }
-
 }
