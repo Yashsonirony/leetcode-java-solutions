@@ -1,44 +1,73 @@
-package Algorithms.algorithm.others;
+package Algorithms.divide2;
 
 public class Sqrt {
+    public static void main(String[] strs) {
+        //System.out.println(sqrt(2));
+        
+        int[] A = {1, 2, 3, 4};
+        System.out.println(find(A, 2));
+    }
+    
+ // return the index of the target, if not find, return -1;
+    public static int find (int[] input, int target) {
+        if (input == null) {
+           return -1;
+        }
+
+        int left = 0; 
+        int right = input.length - 1;
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (input[mid] == target) {
+                 return mid;
+            } else if (input[mid] < target) {
+                 left = mid + 1;
+            } else {
+                 right = mid - 1;
+            }
+        }
+
+        return -1;
+    }
+    
     public static int sqrt(int x) {
-        if (x == 0) {
+        if (x == 1 || x == 0) {
             return x;
         }
         
         int left = 1;
         int right = x;
         
-        int curr = 0;
-        
-        while(left < right) {
-            curr = (left + right)/2;
-            int rst = x/curr;
+        while (left < right - 1) {
+            int mid = left + (right - left) / 2;
+            int quo = x / mid;
             
-            System.out.printf("curr: %d rst:%d left:%d right:%d\n", curr, rst, left, right);
-            
-            if (rst == curr){
-                return rst;
-            } else if (rst > curr) {
-                left = curr+1;
+            if (quo == mid) {
+                return quo;
+            // mid is too big    
+            } else if (quo < mid) {
+                right = mid;
             } else {
-                right = curr-1;
+                left = mid;
             }
+            System.out.println(left + " " + right);
         }
         
         
-        System.out.printf("Ret: curr: %d left:%d right:%d x/left:%d \n", curr, left, right, x/left);
-        
-        if (x/left >= left) {
-            return left;
-        } else {
-            return left - 1;
-        }
+        return left;
     }
-    
-    public static void main(String[] args) {
-        int rst = sqrt(8);
-        System.out.printf("rst: %d", rst);
-    }
-
 }
+
+//We can use Car to implements the interfaces:
+//Gearbox, Engine.
+//
+//public class Car implements Geabox, Engine {
+//    // the 
+//}
+//
+//public interface Geabox {
+//}
+//
+//public interface Engine {
+//}【】22；。3
