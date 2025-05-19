@@ -1,69 +1,53 @@
-package Algorithms.binarySearch;
+package Algorithms.divide2;
 
 public class SearchRange {
-    public static void main(String[] strs) {
-        int[] A = {1};
-        
-        System.out.println(searchRange(A, 0)[0] + " " + searchRange(A, 0)[1]);
-    }
-    
-    public static int[] searchRange(int[] A, int target) {
+    public int[] searchRange(int[] A, int target) {
         int[] ret = {-1, -1};
-        
         if (A == null || A.length == 0) {
             return ret;
         }
         
-        int len = A.length;
-        int left = 0; 
-        int right = len - 1;
+        int l = 0;
+        int r = A.length - 1;
         
-        // so when loop end, there will be 2 elements in the array.
-        // search the left bound.
-        while (left < right - 1) {
-            int mid = left + (right - left) / 2;
-            if (target == A[mid]) {
-                // 如果相等，继续往左寻找边界
-                right = mid;
-            } else if (target > A[mid]) {
-                // move right;
-                left = mid;
+        // Find the left bound.
+        while (l < r - 1) {
+            int mid = l + (r - l) / 2;
+            if (A[mid] == target) {
+                r = mid;
+            } else if (A[mid] > target) {
+                r = mid;
             } else {
-                right = mid;
+                l = mid;
             }
         }
         
-        if (A[left] == target) {
-            ret[0] = left;
-        } else if (A[right] == target) {
-            ret[0] = right;
+        if (A[l] == target) {
+            ret[0] = l;
+        } else if (A[r] == target) {
+            ret[0] = r;
         } else {
             return ret;
         }
         
-        left = 0; 
-        right = len - 1;
-        // so when loop end, there will be 2 elements in the array.
-        // search the right bound.
-        while (left < right - 1) {
-            int mid = left + (right - left) / 2;
-            if (target == A[mid]) {
-                // 如果相等，继续往右寻找右边界
-                left = mid;
-            } else if (target > A[mid]) {
-                // move right;
-                left = mid;
+        l = 0;
+        r = A.length - 1;
+        // Find the right bound.
+        while (l < r - 1) {
+            int mid = l + (r - l) / 2;
+            if (A[mid] == target) {
+                l = mid;
+            } else if (A[mid] > target) {
+                r = mid;
             } else {
-                right = mid;
+                l = mid;
             }
         }
         
-        if (A[right] == target) {
-            ret[1] = right;
-        } else if (A[left] == target) {
-            ret[1] = left;
+        if (A[r] == target) {
+            ret[1] = r;
         } else {
-            return ret;
+            ret[1] = l;
         }
         
         return ret;
