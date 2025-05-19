@@ -1,56 +1,48 @@
-package Algorithms.algorithm.others;
+package Algorithms.dp;
 
 public class NumDecodings {
-    public static void main(String[] strs) {
-        int num = numDecodings("10");
-    }
-    
-    public static int numDecodings(String s) {
-        // state: f[i]: from 0 to i , the number of ways to decode.
-        // func: f[i] = f[i - 1] + 1 + f[i - 2] * if (s.charAt(i - 1) and s.charAt(i) is a char)
-        //       that is : s.charAt(i - 1) < = 2
-        // init: f[0] = 1
-        // solution: f[len - 1]
-        
+    public int numDecodings(String s) {
         if (s == null || s.length() == 0) {
             return 0;
         }
         
         int len = s.length();
         
-        // in here, 0 means 
-        int[] num = new int[len];
+        // D[i] 表示含有i个字符的子串的DECODE WAYS.
+        int[] D = new int[len + 1];
         
-        if ((int)s.charAt(0) - (int)'0' <= 0) {
-            return 0;
-        } else {
-            num[0] = 1;    
-        }
+        D[0] = 1;
         
-        for (int i = 1; i < len; i++) {
-            num[i] = 0;
-            int curr = (int)s.charAt(i) - (int)'0';
-            int pre = (int)s.charAt(i - 1) - (int)'0';
-            if (curr >= 1) {
-                num[i] += num[i - 1];
+        for (int i = 1; i <= len; i++) {
+            D[i] = 0;
+            
+            // 现在正在考察的字符的索引.
+            int index = i - 1;
+            // 最后一个字符独立解码
+            if (isValidSingle(s.charAt(index))) {
+                D[i] += D[i - 1];
             }
             
-            int sum = pre * 10 + curr;
-            
-            if (sum >= 10 && sum <= 26) {
-                if (i >= 2) {
-                    num[i] += num[i - 2];        
-                } else {
-                    num[i] += 1;
-                }
-            }
-            
-            if (num[i] == 0) {
-                return 0;
+            // 最后一个字符与上一个字符一起解码
+            if (i > 1 && isValidTwo(s.substring(index - 1, index + 1))) {
+                D[i] += D[i - 2];
             }
         }
         
-        return num[len - 1];
+        return D[len];
     }
-
+    
+    public boolean isValidSingle(char c) {
+        if (c >= '1' && c <= '9') {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public boolean isValidTwo(String s) {
+        int num = Integer.parseInt(s);
+        
+        return (num >= 10 && num <= 26);
+    }
 }
