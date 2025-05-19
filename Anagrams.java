@@ -1,55 +1,90 @@
-package Algorithms.algorithm.others;
-import java.util.ArrayList;
-import java.util.HashMap;
+package Algorithms.hash;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Anagrams {
-    public static void main(String[] args) {
-        Anagrams an = new Anagrams();
-        String[] strs = {"car","dog","god","rac","mon","bac","acr","mea","cab", "abd", "adb"};
-        //String[] strs = {"abc", "bac"};
-        System.out.println(an.anagrams(strs).toString());
-    }
-    
-    private int getHash(int[] count) {
-        int hash = 0;
-        int a = 378551;
-        int b = 63689;
+    public List<String> anagrams(String[] strs) {
+        List<String> ret = new ArrayList<String>();
         
-//        int a = 777877;
-//        int b = 123451;
-        for (int num : count) {
-            hash = hash * a + num;
-            a = a * b;
+        if (strs == null) {
+            return ret;
         }
-        return hash;
+        
+        HashMap<String, List<String>> map = new HashMap<String, List<String>>();
+        
+        int len = strs.length;
+        for (int i = 0; i < len; i++) {
+            String s = strs[i];
+            
+            // Sort the string.            
+            char[] chars = s.toCharArray();
+            Arrays.sort(chars);
+            String strSort = new String(chars);   
+            
+            // Create a ArrayList for the sorted string.            
+            if (!map.containsKey(strSort)) {
+                map.put(strSort, new ArrayList<String>());
+            }
+            
+            // Add a new string to the list of the hashmap.
+            map.get(strSort).add(s);
+        }
+        
+        // go through the map and add all the strings into the result.
+        for (Map.Entry<String, List<String>> entry: map.entrySet()) {
+            List<String> list = entry.getValue();
+            
+            // skip the entries which only have one string.
+            if (list.size() == 1) {
+                continue;
+            }
+            
+            // add the strings into the list.
+            ret.addAll(list);
+        }
+        
+        return ret;
     }
     
-    public ArrayList<String> anagrams(String[] strs) {
-        ArrayList<String> result = new ArrayList<String>();
-        HashMap<Integer, ArrayList<String>> map = new HashMap<Integer, ArrayList<String>>();
-
-        for (String str : strs) {
-            int[] count = new int[26];
-            for (int i = 0; i < str.length(); i++) {
-                count[str.charAt(i) - 'a']++;
-            }
-
-            int hash = getHash(count);
-            if (!map.containsKey(hash)) {
-                map.put(hash, new ArrayList<String>());
-            }
-
-            map.get(hash).add(str);
-        }
-
-        for (ArrayList<String> tmp : map.values()) {
-            if (tmp.size() > 1) {
-                result.addAll(tmp);
-            }
-        }
-
-        return result;
+    public static void main(String[] strs1) {
+    	String[] strs = {"str1", "str2", "s1tr"};
+    	System.out.println(anagrams2(strs));
     }
-
+    
+    public static List<String> anagrams2(String[] strs) {
+        List<String> ret = new ArrayList<String>();
+        if (strs == null) {
+            return ret;
+        }
+        
+        HashMap<String, List<String>> map = new HashMap<String, List<String>>();
+        for (int i = 0; i < strs.length; i++) {
+            String s = strs[i];
+            char[] chars = s.toCharArray();
+            
+            Arrays.sort(chars);
+            String sSort = new String(chars);
+            
+            if (map.containsKey(sSort)) {
+                map.get(sSort).add(s);
+            } else {
+                List<String> list = new ArrayList<String>();
+                list.add(s);
+                map.put(sSort, list);
+            }
+        }
+        
+        for (Map.Entry<String, List<String>> entry: map.entrySet()) {
+            List<String> list = entry.getValue();
+            if (list.size() > 1) {
+                ret.addAll(list);
+            }
+        }
+        
+        return ret;
+    }
 }
