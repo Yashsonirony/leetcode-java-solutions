@@ -1,5 +1,6 @@
 class Solution {
     /*
+    
         Rule 1
         - Given array is sorted in non-decreasing order
         
