@@ -12,8 +12,7 @@ public class Solution {
     // 		maxLen = Math.max(j - i + 1, maxLen);
     // 	}
     // 	return maxLen; 
-    // }
-
+    // } 
     public int lengthOfLongestSubstring(String s) {
     	int[] charMap = new int[256];
     	Arrays.fill(charMap, -1);
