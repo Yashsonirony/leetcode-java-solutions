@@ -8,6 +8,7 @@ class Solution {
                 nums[index] = nums[i + 1];
                 index++;
             }
+            
         }
 
         return index;
