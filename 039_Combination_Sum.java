@@ -1,7 +1,6 @@
 //039_Combination_Sum
 class Solution {
     List<List<Integer>> answer = new ArrayList<List<Integer>>();
-
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         int clen =candidates.length;
         for (int i = 0; i < clen; i++) {
