@@ -1,4 +1,5 @@
 class Solution {
+    
     public int romanToInt(String s) {
         int[] arr = new int['A' + 26];
         arr['I'] = 1;
