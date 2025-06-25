@@ -1,4 +1,5 @@
 //014_Longest_Common_Prefix.java
+
 class Solution {
     public String longestCommonPrefix(String[] strs) {
         String result ="";
