@@ -25,7 +25,7 @@ class Solution {
                     visited[j] = true;
                 }
             }
-            
+
             answer.add(list);
         }
         
