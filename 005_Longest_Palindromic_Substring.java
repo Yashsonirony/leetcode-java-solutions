@@ -1,3 +1,4 @@
+
 public class Solution {
     // example in leetcode book
     public String longestPalindrome(String s) {
