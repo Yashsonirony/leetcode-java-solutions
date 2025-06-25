@@ -1,4 +1,5 @@
 class Solution {
+  
   public int maxArea(int[] height) {
 
     int maxArea = 0;
