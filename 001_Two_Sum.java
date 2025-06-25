@@ -7,6 +7,7 @@ public class Solution {
             if (map.containsKey(target - x)) {
                 return new int[]{map.get(target - x), i};
             }
+            
             map.put(x, i);
         }
         throw new IllegalArgumentException("No two sum solution");
